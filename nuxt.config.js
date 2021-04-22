@@ -63,6 +63,10 @@ export default {
           "focus-within-pseudo-class": false
         }
       }
+    },
+    // Fixes: https://github.com/nuxt/nuxt.js/issues/3877
+    splitChunks: {
+      layouts: true
     }
   },
 

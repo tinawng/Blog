@@ -24,9 +24,15 @@
     <section class="latest">
       <h4 class="mb-1">Latest posts</h4>
       <div class="latest__posts">
-        <div v-for="post in latest_posts" :key="post.title" class="latest__posts__card">
-          <div class="latest__posts__card__thumbnail" />
-          <h2 class="my-3">{{post.title}}</h2>
+        <div
+          v-for="post in latest_posts"
+          :key="post.title"
+          class="latest__posts__card"
+        >
+          <NuxtLink :to="post.path">
+            <div class="latest__posts__card__thumbnail" />
+          </NuxtLink>
+          <h2 class="my-3">{{ post.title }}</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
             egestas feugiat efficitur. Etiam finibus consectetur molestie.
@@ -45,7 +51,7 @@
     <section class="bulk">
       <div v-for="post in bulk_posts" :key="post.title" class="bulk__post">
         <div class="bulk__post__text">
-          <h2 class="mb-1">{{post.title}}</h2>
+          <h2 class="mb-1">{{ post.title }}</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
             egestas feugiat efficitur. Etiam finibus consectetur molestie.
@@ -58,7 +64,9 @@
             <span>NodeJS</span>
           </div>
         </div>
-        <div class="bulk__post__thumbnail"></div>
+        <NuxtLink :to="post.path">
+          <div class="bulk__post__thumbnail"></div>
+        </NuxtLink>
       </div>
     </section>
   </div>
@@ -67,9 +75,14 @@
 <script>
 export default {
   async asyncData({ $content, params, error }) {
-    
-    const latest_posts = await $content('articles').sortBy('date', 'desc').limit(2).fetch();
-    const bulk_posts = await $content('articles').sortBy('date', 'desc').skip(2).fetch();
+    const latest_posts = await $content("posts")
+      .sortBy("date", "desc")
+      .limit(2)
+      .fetch();
+    const bulk_posts = await $content("posts")
+      .sortBy("date", "desc")
+      .skip(2)
+      .fetch();
 
     return { latest_posts, bulk_posts };
   },
