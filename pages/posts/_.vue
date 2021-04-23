@@ -66,7 +66,7 @@ export default {
 <style lang="postcss" scoped>
 .post__cover {
   @apply h-96 w-full;
-  @apply mt-8 mb-16;
+  @apply mt-8 mb-12;
   @apply rounded-lg bg-red-100;
 }
 
