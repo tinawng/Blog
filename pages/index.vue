@@ -3,7 +3,7 @@
     <section class="hero">
       <h1 class="mb-1">Tina Blog</h1>
       <h4>quick dev stories</h4>
-      <div class="w-28 my-12 flex justify-between">
+      <div class="w-28 my-8 flex justify-between">
         <a href="https://tina.cafe">
           <icon variant="book-open" :stroke="2" />
         </a>
@@ -14,10 +14,11 @@
           <icon variant="instagram" :stroke="2" />
         </a>
       </div>
-      <p>
-        Pitayan blog is a place publishing contents about web development! All
-        articles are free to read and share. Come and find those inspiring
-        stories.
+      <p class="tracking-wide">
+        A <b>non-award winning</b> blog about my web dev journey.<br />
+        Sharing quick stories on how I <b>solve</b> or <b>create</b> new
+        things.<br />
+        Gracefully <b>illustrated</b> ✨ and <b>emoji</b> punctuated ✍️.
       </p>
     </section>
 
@@ -30,7 +31,19 @@
           class="latest__posts__card"
         >
           <NuxtLink :to="post.path">
-            <div class="latest__posts__card__thumbnail" />
+            <div
+              class="latest__posts__card__cover"
+              :class="`bg-${post.cover_color}-100`"
+            >
+              <div v-if="post.cover_text">
+                {{ post.cover_text }}
+              </div>
+              <img
+                v-else
+                :src="getPostCoverImage(post.slug)"
+                :alt="post.slug"
+              />
+            </div>
           </NuxtLink>
           <h2 class="my-3">{{ post.title }}</h2>
           <p>
@@ -40,9 +53,7 @@
             rutrum vehicula sollicitudin.
           </p>
           <div class="post__tags">
-            <span>Raspberry</span>
-            <span>Sys. Admin</span>
-            <span>NodeJS</span>
+            <span v-for="tag in post.tags" :key="tag">{{tag}}</span>
           </div>
         </div>
       </div>
@@ -59,13 +70,20 @@
             rutrum vehicula sollicitudin.
           </p>
           <div class="post__tags mt-auto">
-            <span>Raspberry</span>
-            <span>Sys. Admin</span>
-            <span>NodeJS</span>
+            <span v-for="tag in post.tags" :key="tag">{{tag}}</span>
           </div>
         </div>
         <NuxtLink :to="post.path">
-          <div class="bulk__post__thumbnail"></div>
+          <div class="bulk__post__cover" :class="`bg-${post.cover_color}-100`">
+            <div v-if="post.cover_text">
+              {{ post.cover_text }}
+            </div>
+            <img
+              v-else
+              :src="getPostCoverImage(post.slug)"
+              :alt="post.slug"
+            />
+          </div>
         </NuxtLink>
       </div>
     </section>
@@ -86,21 +104,33 @@ export default {
 
     return { latest_posts, bulk_posts };
   },
+
+  methods: {
+    getPostCoverImage(slug) {
+      try {
+        var img = require(`~/assets/img/covers/${slug}.png`);
+      } catch (error) {}
+      return img;
+    },
+  },
 };
 </script>
 
 <style lang="postcss" scoped>
 .bulk__post {
   @apply h-48;
+  @apply mb-12;
   @apply grid grid-cols-3 gap-8;
 }
 .bulk__post__text {
   @apply h-full;
   @apply col-span-2;
 }
-.bulk__post__thumbnail {
+.bulk__post__cover {
   @apply h-full w-full;
-  @apply rounded-lg bg-red-100;
+  @apply rounded-lg;
+  @apply flex justify-center items-center;
+  @apply text-center text-4xl;
 }
 
 .latest__posts {
@@ -109,9 +139,11 @@ export default {
 }
 .latest__posts__card {
 }
-.latest__posts__card__thumbnail {
+.latest__posts__card__cover {
   @apply h-56;
-  @apply rounded-lg bg-red-100;
+  @apply rounded-lg;
+  @apply flex justify-center items-center;
+  @apply text-center text-6xl;
 }
 
 .post__tags {

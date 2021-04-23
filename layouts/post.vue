@@ -47,21 +47,30 @@
 .nuxt-content h4 {
   @apply mb-6;
 }
+.nuxt-content a {
+  @apply underline;
+}
+.nuxt-content strong {
+  @apply font-bold;
+}
+.nuxt-content em {
+  font-weight: bolder;
+}
 .nuxt-content blockquote {
   @apply mb-6;
-  @apply pt-5 pb-px pl-4;
+  @apply py-3 pl-4;
   @apply bg-gray-50;
   border-left-width: 3px;
   @apply border-gray-700;
   @apply italic;
 }
-.nuxt-content pre {
-  @apply bg-gray-50;
-  @apply text-gray-500;
+.nuxt-content blockquote p {
+  @apply mb-0;
 }
-.nuxt-content code {
-  @apply mx-0.5;
-  @apply px-1;
-  @apply bg-gray-50;
+.nuxt-content pre {
+  @apply w-4/5;
+  @apply mb-6 mx-auto;
+  @apply rounded-lg bg-gray-50;
+  @apply text-gray-500;
 }
 </style>

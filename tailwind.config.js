@@ -1,4 +1,10 @@
 module.exports = {
+  urge: {
+    content: ['./src/**/*.html', './src/**/*.vue', './src/**/*.js', './src/**/*.postcss'],
+    options: {
+      safelist: [/bg-[a-z]{1,}-100$/]
+    },
+  },
   darkMode: false,
   theme: {
     extend: {

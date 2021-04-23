@@ -10,7 +10,7 @@
         />
         <span class="post__author__name">{{ post.author }}</span>
       </div>
-      <div class="post__author__contact">
+      <div class="post__author__socials">
         <a href="https://github.com/tinawng">
           <icon variant="github" :size="22" :stroke="2" />
         </a>
@@ -19,7 +19,16 @@
         </a>
       </div>
     </div>
-    <div class="post__cover"></div>
+    <div class="post__cover" :class="`bg-${post.cover_color}-100`">
+      <div v-if="post.cover_text">
+        {{ post.cover_text }}
+      </div>
+      <img
+        v-else
+        :src="post_cover_image"
+        :alt="post.slug"
+      />
+    </div>
     <p>{{ post.description }}</p>
     <nuxt-content :document="post" />
   </div>
@@ -47,6 +56,12 @@ export default {
         ".jpg"
       );
     },
+    post_cover_image: function () {
+      try {
+        var img = require(`~/assets/img/covers/${this.post.slug}.png`);
+      } catch (error) {}
+      return img;
+    },
   },
 
   methods: {
@@ -67,7 +82,10 @@ export default {
 .post__cover {
   @apply h-96 w-full;
   @apply mt-8 mb-12;
-  @apply rounded-lg bg-red-100;
+  @apply rounded-lg;
+  
+  @apply flex justify-center items-center;
+  @apply text-center text-7xl;
 }
 
 .post__author {
@@ -81,10 +99,10 @@ export default {
 .post__author__name {
   @apply font-bold capitalize;
 }
-.post__author__contact {
+.post__author__socials {
   @apply flex;
 }
-.post__author__contact > * {
-  @apply ml-4
+.post__author__socials > * {
+  @apply ml-4;
 }
 </style>

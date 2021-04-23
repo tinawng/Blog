@@ -29,4 +29,7 @@ h4 {
 p {
   @apply text-base font-light text-gray-500;
 }
+b {
+  @apply font-bold;
+}
 </style>
