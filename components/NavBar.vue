@@ -1,6 +1,6 @@
 <template>
   <section class="nav_bar__container">
-    <div v-if="logo" class="nav_bar__logo">✏️ Tina Blog</div>
+    <NuxtLink to="/" v-if="logo" class="nav_bar__logo">✏️ Tina Blog</NuxtLink>
     <transition name="slide-fade">
       <div v-if="show_nav" class="nav_bar__links">
         <NuxtLink to="/">
@@ -23,7 +23,7 @@
 <script>
 export default {
   props: {
-    logo: Boolean
+    logo: Boolean,
   },
   data: () => ({
     show_nav: false,
@@ -48,7 +48,7 @@ export default {
   @apply mr-auto;
   font-family: "Fira Sans";
   @apply text-2xl font-extrabold;
-  
+
   animation: 1.2s cubic-bezier(0.25, 0.8, 0.5, 1) 0s 1 slide-in;
 }
 
