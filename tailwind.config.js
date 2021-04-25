@@ -1,5 +1,5 @@
 module.exports = {
-  urge: {
+  purge: {
     content: ['./src/**/*.html', './src/**/*.vue', './src/**/*.js', './src/**/*.postcss'],
     options: {
       safelist: [/bg-[a-z]{1,}-100$/]
