@@ -47,13 +47,10 @@
           </NuxtLink>
           <h2 class="my-3">{{ post.title }}</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-            egestas feugiat efficitur. Etiam finibus consectetur molestie.
-            Maecenas maximus gravida turpis, nec dictum nunc tempor at. Ut
-            rutrum vehicula sollicitudin.
+            {{ post.description }}
           </p>
           <div class="post__tags">
-            <span v-for="tag in post.tags" :key="tag">{{tag}}</span>
+            <span v-for="tag in post.tags" :key="tag">{{ tag }}</span>
           </div>
         </div>
       </div>
@@ -64,13 +61,10 @@
         <div class="bulk__post__text">
           <h2 class="mb-1">{{ post.title }}</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
-            egestas feugiat efficitur. Etiam finibus consectetur molestie.
-            Maecenas maximus gravida turpis, nec dictum nunc tempor at. Ut
-            rutrum vehicula sollicitudin.
+            {{ post.description }}
           </p>
-          <div class="post__tags mt-auto">
-            <span v-for="tag in post.tags" :key="tag">{{tag}}</span>
+          <div class="post__tags">
+            <span v-for="tag in post.tags" :key="tag">{{ tag }}</span>
           </div>
         </div>
         <NuxtLink :to="post.path">
@@ -78,11 +72,7 @@
             <div v-if="post.cover_text">
               {{ post.cover_text }}
             </div>
-            <img
-              v-else
-              :src="getPostCoverImage(post.slug)"
-              :alt="post.slug"
-            />
+            <img v-else :src="getPostCoverImage(post.slug)" :alt="post.slug" />
           </div>
         </NuxtLink>
       </div>
@@ -149,9 +139,10 @@ export default {
 .post__tags {
   @apply mt-6;
   @apply text-xs;
+  @apply flex flex-wrap;
 }
 .post__tags > span {
-  @apply mr-3;
+  @apply mb-2 mr-3;
   @apply py-1 px-3;
   @apply rounded-md bg-gray-100;
   @apply tracking-wide;

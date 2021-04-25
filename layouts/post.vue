@@ -19,11 +19,11 @@
 /* 🐛 Specify .post__container to prevent layout styles leak */
 .post__container h1 {
   font-family: "Fira Sans";
-  @apply text-3xl font-extrabold;
+  @apply text-3xl font-medium;
 }
 .post__container h2 {
   @apply mt-14 mb-8;
-  @apply text-2xl font-extrabold;
+  @apply text-2xl font-bold;
 }
 .post__container h3 {
   @apply mb-6;
@@ -72,5 +72,10 @@
   @apply mb-6 mx-auto;
   @apply rounded-lg bg-gray-50;
   @apply text-gray-500;
+}
+.nuxt-content p > code {
+  @apply py-0.5 px-1.5;
+  @apply rounded bg-gray-100 text-gray-700;
+  /* color: #DD4A68; */
 }
 </style>
