@@ -150,8 +150,16 @@ export default {
 
 .hero {
   @apply max-w-xl;
-  @apply mx-auto;
+  @apply mt-8 pb-10 mx-auto;
   @apply flex flex-col justify-center items-center text-center;
+}
+
+.hero h1 {
+  @apply relative;
+}
+.hero h1:before {
+  content: "✏️";
+  @apply absolute -left-24;
 }
 
 section {
