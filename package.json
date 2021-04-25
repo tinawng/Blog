@@ -1,5 +1,5 @@
 {
-  "name": "ishitani",
+  "name": "blog",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,9 +8,7 @@
     "deploy": "scp -r ./dist siyu:/home/pi/work/static-servers/blog"
   },
   "dependencies": {
-    "@nuxt/content": "^1.14.0"
-  },
-  "devDependencies": {
+    "@nuxt/content": "^1.14.0",
     "@nuxtjs/tailwindcss": "^4.0.1",
     "nuxt": ">=2.15.3",
     "postcss": "^8.2.8"
