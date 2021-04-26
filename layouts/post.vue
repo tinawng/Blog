@@ -23,7 +23,7 @@
 }
 .post__container h2 {
   @apply mt-14 mb-8;
-  @apply text-2xl font-bold;
+  @apply text-xl font-bold;
 }
 .post__container h3 {
   @apply mb-6;
@@ -77,5 +77,15 @@
   @apply py-0.5 px-1.5;
   @apply rounded bg-gray-100 text-gray-700;
   /* color: #DD4A68; */
+}
+
+.nuxt-content ul {
+  @apply ml-4 mb-6;
+  @apply text-gray-500;
+}
+.nuxt-content li:before {
+  content: '•';
+  font-family: sans-serif;
+  @apply mr-4;
 }
 </style>
