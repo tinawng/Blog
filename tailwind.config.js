@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       colors: {
         steel: {
+          '50': '#FDFBFD',
           '300': '#4C4C4C',
           '400': '#353537',
           '500': '#272727',

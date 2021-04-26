@@ -25,7 +25,11 @@
       </div>
       <img v-else :src="post_cover_image" :alt="post.slug" />
     </div>
-    <p>{{ post.description }}</p>
+    <div v-if="post.repo" class="post__repo" @click="openNewTab(`https://${post.repo}/`)">
+      <icon class="mr-6" variant="github" :size="32" :stroke="1.8"/>
+      <h3 class="underline">{{ post.repo }}</h3>
+      <span class="ml-auto text-xl opacity-90">🔗</span>
+    </div>
 
     <nuxt-content :document="post" />
 
@@ -35,7 +39,7 @@
       <div class="next__post__text">
         <h2>{{ post.title }}</h2>
         <p>
-          {{post.description}}
+          {{ post.description }}
         </p>
 
         <div class="next__post__tags">
@@ -94,6 +98,10 @@ export default {
       var formated_date = `${day} ${month}, ${year}`;
       return formated_date;
     },
+
+    openNewTab(href) {
+      window.open(href, '_blank');
+    }
   },
 };
 </script>
@@ -101,6 +109,23 @@ export default {
 <style lang="postcss" scoped>
 .post__title {
   @apply font-extrabold;
+}
+
+.post__repo {
+  @apply mb-12;
+  @apply py-5 px-8;
+  @apply rounded-lg shadow-md bg-steel-50;
+  @apply flex justify-start items-center;
+  @apply text-gray-800;
+  @apply cursor-pointer;
+
+  transition: all 0.4s;
+}
+.post__repo:hover {
+  @apply shadow-xl;
+}
+.post__repo > * {
+  @apply mb-0;
 }
 
 .post__cover {
