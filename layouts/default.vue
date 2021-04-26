@@ -24,10 +24,10 @@ h3 {
 }
 h4 {
   font-family: 'Fira Sans';
-  @apply text-lg italic font-bold text-gray-500
+  @apply text-lg italic font-bold text-gray-600
 }
 p {
-  @apply text-base font-light text-gray-500;
+  @apply text-base font-light text-gray-600;
 }
 b {
   @apply font-bold;
