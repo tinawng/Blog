@@ -27,6 +27,12 @@
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
     </g>
+    <g v-else-if="variant == 'compass'">
+      <circle cx="12" cy="12" r="10"></circle>
+      <polygon
+        points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"
+      ></polygon>
+    </g>
   </svg>
 </template>
 
