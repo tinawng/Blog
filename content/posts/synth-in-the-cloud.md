@@ -1,4 +1,5 @@
 ---
+slug: synth-in-the-cloud
 title: Putting my hardware synth in the cloud
 description: Coming soon
 cover_text: 🎹☁️

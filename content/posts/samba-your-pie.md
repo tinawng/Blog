@@ -1,4 +1,5 @@
 ---
+slug: samba-your-pie
 title: Samba your Pie ~ a DIY Synology ?
 description: I really need something to centralize all my work in one place. But why buying a all-ready-to-use box when you can make it yourself ?
 cover_text: 💃🥧
@@ -34,7 +35,7 @@ cp /etc/samba/smb.conf /etc/samba/smb.conf.sample
 service smbd start
 ```
 
-Well, that was easy! Install, duplicate default config file (a good habit everyone should have 🙆‍♀️) and run the thing.
+Well, that was easy! Install, duplicate default config file (a good habit everyone should have 🙆‍♀️) and run the thingy.
 
 # Quick technical aside
 
@@ -73,8 +74,8 @@ What's great about Samba is that it's natively supported by Windows.
 Open the Windows explorer and just write down the server IP address like following `\\192.168.1.101`.
 A small window should appear asking you login informations.
 
-This only works for local network. In order to connect from everywhere I need to tweak my router config to forward port `445` to your server.
+This only works for local network. In order to connect from everywhere you need to tweak your router config to forward port `445` to your server.
 
-To connect from your Android phone you can use *CS File Explorer* 😉
+To connect from any Android phone you can use *CS File Explorer* 😉
 
 And we're done! 🎉

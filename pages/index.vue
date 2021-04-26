@@ -16,7 +16,7 @@
       </div>
       <p class="tracking-wide">
         A <b>non-award winning</b> blog about my web dev journey.<br />
-        Sharing quick stories on how I <b>solve</b> or <b>create</b> new
+        Sharing quick stories on how I <b>solve</b> and <b>create</b> new
         things.<br />
         Gracefully <b>illustrated</b> ✨ and <b>emoji</b> punctuated ✍️.
       </p>
@@ -84,10 +84,12 @@
 export default {
   async asyncData({ $content, params, error }) {
     const latest_posts = await $content("posts")
+      .without(["body"])
       .sortBy("date", "desc")
       .limit(2)
       .fetch();
     const bulk_posts = await $content("posts")
+      .without(["body"])
       .sortBy("date", "desc")
       .skip(2)
       .fetch();
@@ -98,7 +100,7 @@ export default {
   methods: {
     getPostCoverImage(slug) {
       try {
-        var img = require(`~/assets/img/covers/${slug}.png`);
+        var img = require(`~/assets/img/posts/${slug}/cover.png`);
       } catch (error) {}
       return img;
     },
