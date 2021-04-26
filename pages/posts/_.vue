@@ -12,10 +12,10 @@
       </div>
       <div class="post__author__socials">
         <a href="https://github.com/tinawng">
-          <icon variant="github" :size="22" :stroke="2" />
+          <icon class="post__author__socials__icon" variant="github" :size="22" :stroke="2" />
         </a>
         <a href="https://www.instagram.com/tina_likes_cafe/">
-          <icon variant="instagram" :size="22" :stroke="2" />
+          <icon class="post__author__socials__icon" variant="instagram" :size="22" :stroke="2" />
         </a>
       </div>
     </div>
@@ -25,37 +25,70 @@
       </div>
       <img v-else :src="post_cover_image" :alt="post.slug" />
     </div>
-    <div
-      v-if="post.repo"
-      class="post__repo"
-      @click="openNewTab(`https://${post.repo}/`)"
-    >
-      <icon class="mr-6" variant="github" :size="32" :stroke="1.8" />
-      <h3 class="underline">{{ post.repo }}</h3>
-      <span class="ml-auto text-xl opacity-90">🔗</span>
+
+    <div v-if="post.live || post.repo" class="post__ext_links">
+      <div
+        v-if="post.live"
+        class="post__ext_links__link"
+        @click="openNewTab(`https://${post.live}/`)"
+      >
+        <icon
+          class="post__ext_links__link__icon"
+          variant="compass"
+          :size="32"
+          :stroke="1.8"
+        />
+        <h3 class="post__ext_links__link__name">{{ post.live }}</h3>
+        <span class="post__ext_links__link__emoji">🔗</span>
+      </div>
+      <div
+        v-if="post.live && post.repo"
+        class="my-6 border-t border-gray-300"
+      ></div>
+      <div
+        v-if="post.repo"
+        class="post__ext_links__link"
+        @click="openNewTab(`https://${post.repo}/`)"
+      >
+        <icon
+          class="post__ext_links__link__icon"
+          variant="github"
+          :size="32"
+          :stroke="1.8"
+        />
+        <h3 class="post__ext_links__link__name">{{ post.repo }}</h3>
+        <span class="post__ext_links__link__emoji">🔗</span>
+      </div>
     </div>
 
     <nuxt-content :document="post" />
 
     <div class="mt-16 border-t border-gray-600"></div>
     <h3 class="mt-24">Coming up next 👇</h3>
-    <div class="next__post">
-      <div class="next__post__text">
+    <div class="next_post">
+      <div class="next_post__text">
         <h2>{{ next_post.title }}</h2>
         <p>
           {{ next_post.description }}
         </p>
 
-        <div class="next__post__tags">
+        <div class="next_post__tags">
           <span v-for="tag in next_post.tags" :key="tag">{{ tag }}</span>
         </div>
       </div>
       <NuxtLink :to="next_post.path">
-        <div class="next__post__cover" :class="`bg-${next_post.cover_color}-100`">
+        <div
+          class="next_post__cover"
+          :class="`bg-${next_post.cover_color}-100`"
+        >
           <div v-if="next_post.cover_text">
             {{ next_post.cover_text }}
           </div>
-          <img v-else :src="getPostCoverImage(next_post.slug)" :alt="next_post.slug" />
+          <img
+            v-else
+            :src="getPostCoverImage(next_post.slug)"
+            :alt="next_post.slug"
+          />
         </div>
       </NuxtLink>
     </div>
@@ -119,21 +152,30 @@ export default {
   @apply font-extrabold;
 }
 
-.post__repo {
+.post__ext_links {
   @apply mb-12;
   @apply py-5 px-8;
   @apply rounded-lg shadow-md bg-steel-50;
+}
+.post__ext_links__link {
   @apply flex justify-start items-center;
   @apply text-gray-800;
   @apply cursor-pointer;
-
-  transition: all 0.4s;
 }
-.post__repo:hover {
-  @apply shadow-xl;
+.post__ext_links__link__icon {
+  @apply mr-6;
 }
-.post__repo > * {
-  @apply mb-0;
+.post__ext_links__link__name {
+  @apply m-0;
+  @apply underline;
+}
+.post__ext_links__link__emoji {
+  @apply ml-auto;
+  @apply opacity-80;
+  @apply text-xl;
+}
+.post__ext_links__link:hover .post__ext_links__link__icon {
+  animation: .8s cubic-bezier(0.28, 0.84, 0.42, 1) 0s 1 bounce;
 }
 
 .post__cover {
@@ -162,31 +204,35 @@ export default {
 .post__author__socials > * {
   @apply ml-4;
 }
+.post__author__socials__icon:hover {
+  animation: .8s cubic-bezier(0.28, 0.84, 0.42, 1) 0s 1 bounce-small;
+}
 
-.next__post {
+.next_post {
   @apply h-36;
   @apply mb-24;
   @apply grid grid-cols-3 gap-8;
 }
-.next__post__text {
+.next_post__text {
   @apply h-full;
   @apply col-span-2;
 }
-.next__post__text > h2 {
+.next_post__text > h2 {
   @apply mt-1 mb-2;
 }
-.next__post__cover {
+.next_post__cover {
   @apply h-full w-full;
   @apply rounded-lg;
   @apply flex justify-center items-center;
   @apply text-center text-4xl;
 }
-.next__post__tags {
+.next_post__tags {
   @apply mt-6;
   @apply text-xs;
+  @apply flex flex-wrap;
 }
-.next__post__tags > span {
-  @apply mr-3;
+.next_post__tags > span {
+  @apply mb-2 mr-3;
   @apply py-1 px-3;
   @apply rounded-md bg-gray-100;
   @apply tracking-wide;
