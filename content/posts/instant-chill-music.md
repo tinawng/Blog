@@ -7,6 +7,7 @@ cover_color: yellow
 date: 2021-04-23
 author: Tina Wang
 tags: [Front End, Static, Nuxt.js]
+live: chill.tina.cafe
 repo: github.com/tinawng/chill
 ---
 
@@ -35,17 +36,19 @@ I like breaking down big problems into smaller one but it's important to keep al
 
 With that in ming, let's start *bottom-up* with the data.
 
-## Album informations
+## Album datas
 
-An important aspect is to not host any file *directly*. Instead we're gonna stream all the albums from youtube.
+### Tracks list
+An important aspect is to not host any file *directly*. Instead we're gonna stream all the albums from youtube using an hidden iframe 🚀
 
 One cool aspect of this approach is that I can use the Youtube API to get the video description. In lot of cases it contains the album track list with their time stamps! We *just* need to parse the description and build the tracklist.
 
 Writing the parser was a long and tedious task 😓 but I managed to have an algorithm that work in most cases. You can check it out on the [Github repo](https://github.com/tinawng/chill/blob/main/plugins/albums-parser.js).
 
+### Album set
 In order to have my precious *✨hand picked✨* albums selection, I just added a JSON file with all the albums' Youtube links like following:
 
-```js
+```js[album.json]
 [
   {
     "type": "album",
@@ -57,14 +60,113 @@ In order to have my precious *✨hand picked✨* albums selection, I just added 
 ]
 ```
 
-As you can see, the album cover is not hosted as well. It's loaded from one of Bandcamp CDN 😁.
+### Script pre-running
 
-See what I did here ? 4 of the challenges are met 💪
+As you can imagine, running the *album parser* script for every registered albums take some time, not a lot, but still. That's why I'm using Nuxt's `asyncData` function 💖.
 
-I reduce assets hosting to bare minimum using external hosts and Youtube API, JSONify album set allows me to infinitely choose a random album in my album array.
+```js[index.vue]
+async asyncData({ $albums }) {
+	var albums = $albums;
+    return { albums };
+},
+```
+
+When generating static pages Nuxt will only run this script server side, as specified in `nuxt.config.js`
+
+```js
+plugins: [
+    { src: '@/plugins/albums-parser.js', mode: 'server' }
+],
+```
+
+Nuxt will then put the data in a payload js file which will be loaded at the very beginning of the page.
+
+```js[/_nuxt/static/__hash__/payload.js]
+__NUXT_JSONP__("/", {
+	data:[{
+		albums: {
+			type:"album",genre:void 0,name:"Cozy Winter",yo...
+		}
+	}]
+});
+```
+
+And yes, the album cover is not hosted as well. It's loaded from one of Bandcamp CDN 😁
+
+See what I did here ? Four challenges met 💪
+
+I reduce assets hosting to bare minimum using external hosts and JSONify albums set allows me to infinitely choose a random album in my album array.
 
 ## UI / UX
 
-UI was grealty and generously inspired by Window Groove music app.
+### Desktop
+UI was grealty and generously inspired by **Window Groove Music App** clean and minimalist design.
 
-<markdown-img :src="slug + '/windows-groove.jpg'" alt="windows groove" class="w-4/5 mx-auto">
+<markdown-image :src="slug + '/windows-groove.jpg'" alt="windows groove" description="Windows Groove ~ very nice UI isn't it ? 💄"></markdown-image>
+
+I made some tweaks here and there to better suit my taste and use case but keeping the essence of it, like the blurry album cover and text aligned to the right.
+
+On the other hand, the album selection menu was a total improvisation which turns out pretty well in my opinion 🥰
+
+> Don't forget you can try it by yourself live [right here 🔗](https://chill.tina.cafe/)
+
+
+### Mobile
+
+Since I've seen this design, I was waiting for a good oppurtunity to use it. A huge shoutout to [Ekko Design 🎉](https://www.ekkodesign.no/work/chillhop-music-app-ui-concept) for this amazing mobile app concept !
+
+<markdown-image :src="slug + '/ekko-design.jpg'" alt="ekko-design"></markdown-image>
+
+Again, a few small adjustments later and I have a mobile UI ✨.
+
+# And the trouble begins...
+
+## Detecting mobile
+
+I discover that finding if client is using mobile or desktop using javascript is actually stricky. There is somy Nuxt module giving you this information based on `user-agent` inside the request header. Unfornunately, as I'm running a static website, none of this module can work.
+
+On top of that, I'm to a big fan of using the *user-agent*. I don't know if it is 100% reliable and I want user to have to mobile UI on desktop if the browser is resized small enough.
+
+For CSS, i can use `media queries` but for JS I need to be smarter. What I endup using is the same trick I used for my *Responsive Image Loader*
+
+```js[index.vue ~ script]
+isMobile() {
+	this.is_mobile = !window.matchMedia("(min-width: 768px)").matches;
+},
+```
+
+## Sleeping mobile
+
+Rembember when I said everything is streamed from Youtube ? Well, that means that, unlike a *'real'* music player app, this cannot play music if your mobile screen is locked. There is no workaround for this unless you are using a specific browser or a dedicated app. 😢
+
+However, what I can do is prevent the screen from turning off 💡
+
+How ? Instead of hiding the youtube video, I resize it to 1px by 1px. So technically even though you can't see it, a video is played, preventing your screen from going to sleep mode 🚫💤
+
+```js[index.vue ~ script]
+this.player = YouTubePlayer("player", {
+	height: "1",
+	width: "1"
+});
+```
+```css[index.vue ~ style]
+iframe {
+	@apply absolute bottom-0 right-0 md:hidden;
+}
+```
+
+## Autoplay
+
+This one fall into the *strange behavior 👽* category. By that I mean sometimes it works and sometimes not.
+
+On paper, autoplay is strongly discouraged from any video or audio source. You can take as an example the Web Audio API which will not play any sound without user intervention in the first place.
+
+I think depending on the events and callbacks timing, it turns out that autoplay work in most cases 🤷‍♀️
+
+# Conclusion time
+
+This project raised many challenges. One of them being the album-parser script as I want have maximum automation for this.
+
+Combining completely different mobile and desktop user interfaces for one website was also a really big challenge 😵
+
+The final product really met expectation and I'm really proud of how it turn out in terms of functionality and UI 🎊🎉
