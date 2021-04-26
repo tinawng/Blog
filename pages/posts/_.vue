@@ -25,8 +25,12 @@
       </div>
       <img v-else :src="post_cover_image" :alt="post.slug" />
     </div>
-    <div v-if="post.repo" class="post__repo" @click="openNewTab(`https://${post.repo}/`)">
-      <icon class="mr-6" variant="github" :size="32" :stroke="1.8"/>
+    <div
+      v-if="post.repo"
+      class="post__repo"
+      @click="openNewTab(`https://${post.repo}/`)"
+    >
+      <icon class="mr-6" variant="github" :size="32" :stroke="1.8" />
       <h3 class="underline">{{ post.repo }}</h3>
       <span class="ml-auto text-xl opacity-90">🔗</span>
     </div>
@@ -37,21 +41,21 @@
     <h3 class="mt-24">Coming up next 👇</h3>
     <div class="next__post">
       <div class="next__post__text">
-        <h2>{{ post.title }}</h2>
+        <h2>{{ next_post.title }}</h2>
         <p>
-          {{ post.description }}
+          {{ next_post.description }}
         </p>
 
         <div class="next__post__tags">
-          <span v-for="tag in post.tags" :key="tag">{{ tag }}</span>
+          <span v-for="tag in next_post.tags" :key="tag">{{ tag }}</span>
         </div>
       </div>
-      <NuxtLink :to="post.path">
-        <div class="next__post__cover" :class="`bg-${post.cover_color}-100`">
-          <div v-if="post.cover_text">
-            {{ post.cover_text }}
+      <NuxtLink :to="next_post.path">
+        <div class="next__post__cover" :class="`bg-${next_post.cover_color}-100`">
+          <div v-if="next_post.cover_text">
+            {{ next_post.cover_text }}
           </div>
-          <img v-else :src="getPostCoverImage(post.slug)" :alt="post.slug" />
+          <img v-else :src="getPostCoverImage(next_post.slug)" :alt="next_post.slug" />
         </div>
       </NuxtLink>
     </div>
@@ -69,7 +73,11 @@ export default {
         error({ statusCode: 404, message: "Post not found" });
       });
 
-    return { post };
+    const surround_posts = await $content("posts").surround(post.slug).fetch();
+    const next_post =
+      surround_posts[0] == null ? surround_posts[1] : surround_posts[0];
+
+    return { post, next_post };
   },
 
   computed: {
@@ -82,7 +90,7 @@ export default {
     },
     post_cover_image: function () {
       try {
-        var img = require(`~/assets/img/covers/${this.post.slug}.png`);
+        var img = require(`~/assets/img/posts/${this.next_post.slug}/cover.png`);
       } catch (error) {}
       return img;
     },
@@ -100,8 +108,8 @@ export default {
     },
 
     openNewTab(href) {
-      window.open(href, '_blank');
-    }
+      window.open(href, "_blank");
+    },
   },
 };
 </script>
