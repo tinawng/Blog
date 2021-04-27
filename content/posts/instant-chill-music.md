@@ -1,7 +1,7 @@
 ---
 slug: instant-chill-music
 title: Instant Chill Music ~ yet another Spotify ripoff
-description: Coming soon
+description: When I first encountered Traf's Sunday.fm, I was blown away by the simplicity of the concept. But I see a better opportunity than just re-streaming already existing webradios.
 cover_text: 🎶☕
 cover_color: yellow
 date: 2021-04-23
@@ -11,7 +11,7 @@ live: chill.tina.cafe
 repo: github.com/tinawng/chill
 ---
 
-When I first encounted Traf's [Sunday.fm](https://sunday.fm/), I was blown away by the simplicity of the concept. I'm already a big fan of webradios and regularly listen to [Chilled Cow's youtube stream](https://www.youtube.com/watch?v=5qap5aO4i9A).
+When I first encountered Traf's [Sunday.fm](https://sunday.fm/), I was blown away by the simplicity of the concept. I'm already a big fan of webradios and regularly listen to [Chilled Cow's youtube stream](https://www.youtube.com/watch?v=5qap5aO4i9A).
 
 But I see a better opportunity than just re-streaming already existing webradios.
 
@@ -34,7 +34,7 @@ As I'm still in the *all static website* trend, this project will be generate wi
 
 I like breaking down big problems into smaller one but it's important to keep all the pieces in mind. Solving one part of a problem *smartly* can snowball *in a good way* for others parts of others problem.
 
-With that in ming, let's start *bottom-up* with the data.
+With that in mind, let's start *bottom-up* with the data.
 
 ## Album datas
 
@@ -127,7 +127,7 @@ I discover that finding if client is using mobile or desktop using javascript is
 
 On top of that, I'm to a big fan of using the *user-agent*. I don't know if it is 100% reliable and I want user to have to mobile UI on desktop if the browser is resized small enough.
 
-For CSS, i can use `media queries` but for JS I need to be smarter. What I endup using is the same trick I used for my *Responsive Image Loader*
+For CSS, I can use `media queries` but for JS I need to be smarter. What I endup using is the same trick I used for my *Responsive Image Loader*
 
 ```js[index.vue ~ script]
 isMobile() {
