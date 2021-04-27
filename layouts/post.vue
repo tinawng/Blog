@@ -68,7 +68,8 @@
   @apply mb-0;
 }
 .nuxt-content .nuxt-content-highlight {
-  @apply w-4/5;
+  @apply max-w-max;
+  min-width: 80%;
   @apply mx-auto;
 }
 .nuxt-content .filename {
