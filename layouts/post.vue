@@ -53,6 +53,10 @@
 .nuxt-content strong {
   @apply font-bold;
 }
+.nuxt-content del {
+  @apply line-through;
+  text-decoration-thickness: 2.5px;
+}
 .nuxt-content em {
   font-weight: bolder;
 }
