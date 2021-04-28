@@ -121,9 +121,38 @@ Again, a few small adjustments later and I have a mobile UI ✨.
 
 # And the trouble begins...
 
+## Progress Bar
+
+In more *'normal'* usage you are not hiding the youtube video iframe. What's why, *I think*, both youtube embed player iframe and the *youtube-player* module I used don't have any event to listen to for time tracking.
+
+That's a bummer 😒
+
+What I end up with is a `setInterval` method, updated every 3 seconds like so:
+
+```js[index.vue ~ script]
+setInterval(async () => {
+	this.player_current_time = parseInt(await this.player.getCurrentTime());
+}, 3000);
+```
+
+`player_current_time`  is then `watched` for updating the `current_track` accordingly to the album's track list and time stamps.
+
+```js[index.vue ~ script]
+watch: {
+	player_current_time: function (time) {
+		this.current_track = this.findTrack(time);
+	},
+},
+```
+
+With this approach, I can't make a decent progress bar. Updating every 3 seconds is not enough for smooth progress and I don't want to go faster for performance reasons as it needs to run on mobile.
+
+Actually it's not that big of a deal as this app is supposed to be a background music player 🤷‍♀️
+I mean, you're not seeking through the track very often and you still can't do it on webradios. I found the lack of a progress bar actually makes the design even more minimalistic 😁 and you can still browse the track list if you want.
+
 ## Detecting mobile
 
-I discover that finding if client is using mobile or desktop using javascript is actually stricky. There is somy Nuxt module giving you this information based on `user-agent` inside the request header. Unfornunately, as I'm running a static website, none of this module can work.
+I discover that finding if client is using mobile or desktop using javascript is actually stricky. There is some Nuxt module that give you this information based on `user-agent` request header. Unfornunately, as I'm running a static website, none of this module can work.
 
 On top of that, I'm to a big fan of using the *user-agent*. I don't know if it is 100% reliable and I want user to have to mobile UI on desktop if the browser is resized small enough.
 
@@ -135,13 +164,13 @@ isMobile() {
 },
 ```
 
-## Sleeping mobile
+## Prevent mobile sleep
 
 Rembember when I said everything is streamed from Youtube ? Well, that means that, unlike a *'real'* music player app, this cannot play music if your mobile screen is locked. There is no workaround for this unless you are using a specific browser or a dedicated app. 😢
 
 However, what I can do is prevent the screen from turning off 💡
 
-How ? Instead of hiding the youtube video, I resize it to 1px by 1px. So technically even though you can't see it, a video is played, preventing your screen from going to sleep mode 🚫💤
+How ? Instead of hiding the youtube video, I resize it to 1px by 1px. So technically even though you can't see it a video is being played, preventing your screen from going to sleep mode 🚫💤
 
 ```js[index.vue ~ script]
 this.player = YouTubePlayer("player", {
