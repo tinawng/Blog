@@ -1,7 +1,7 @@
 <template>
-  <div class="markdown_img__container">
-    <img class="markdown_img__image" :src="imgSrc()" :alt="alt" />
-    <p class="markdown_img__desc">{{description}}</p>
+  <div class="markdown_img__container" @click="is_enlarged = !is_enlarged">
+    <img class="markdown_img__image" :class="{'markdown_img_enlarged__image': is_enlarged}" :src="imgSrc()" :alt="alt" />
+    <p class="markdown_img__desc">{{ description }}</p>
   </div>
 </template>
 
@@ -18,6 +18,10 @@ export default {
     },
     description: String,
   },
+  data: () => ({
+    is_enlarged: false,
+  }),
+
   methods: {
     imgSrc() {
       try {
@@ -34,13 +38,24 @@ export default {
 <style lang="postcss" scoped>
 .markdown_img__container {
   max-width: 80%;
+  width: 80%;
   @apply my-10 mx-auto;
 }
-.markdown_img__image { 
+.markdown_img__image {
+  @apply mx-auto;
   @apply rounded-lg;
+  min-width: 40%;
+  transition: all .8s;
 }
 .markdown_img__desc {
   @apply mt-3;
   @apply text-center italic text-gray-600;
+}
+
+.markdown_img_enlarged__image {
+  min-width: 64rem;
+  transform: translateX(-12rem);
+
+  /* transform: scale(2,2); */
 }
 </style>
