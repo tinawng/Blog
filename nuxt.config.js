@@ -33,7 +33,16 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    // https://github.com/juliomrqz/nuxt-optimized-images
+    '@aceforth/nuxt-optimized-images',
   ],
+
+  optimizedImages: {
+    optimizeImages: true,
+    optimizeImagesInDev: true,
+    mozjpeg: { quality: 90 }
+    // webp: { method: 6, quality: 95 },
+  },
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: ['@nuxt/content'],

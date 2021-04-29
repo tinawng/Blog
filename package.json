@@ -8,8 +8,10 @@
     "deploy": "scp -r ./dist siyu:/home/pi/work/static-servers/blog"
   },
   "dependencies": {
+    "@aceforth/nuxt-optimized-images": "^1.4.0",
     "@nuxt/content": "^1.14.0",
     "@nuxtjs/tailwindcss": "^4.0.1",
+    "imagemin-mozjpeg": "^9.0.0",
     "nuxt": ">=2.15.3",
     "postcss": "^8.2.8"
   }
