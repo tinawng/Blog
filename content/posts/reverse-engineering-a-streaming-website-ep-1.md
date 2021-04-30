@@ -1,7 +1,7 @@
 ---
 slug: reverse-engineering-a-streaming-website-ep-1
 title: Reverse engineering a streaming website ~ Ep.1 
-description: In this serie I will introduce you to the most interesting website that I have come across and how I managed to bypass their protection in order to download their precious videos.
+description: In this serie I will introduce you to the most interesting websites that I have come across and how I managed to bypass their protection in order to download their precious videos.
 cover_text: 🔧📺
 cover_color: purple
 date: 2021-04-27
@@ -9,13 +9,13 @@ author: Tina Wang
 tags: [Reverse Engineer, Front End]
 ---
 
-What I like to do during my long sleepness night is randomly seek across *'disreputable'* streaming website, trying to find new animes or series to watch.
+What I like to do during my long sleepness night, is randomly seek across *'disreputable'* streaming website, trying to find new animes or series to watch.
 
-Relying on these kind of websites is **absolutly not safe**. They can disapear at any time without any warning. So what I end up doing is downloading all the videos available when I found intersest in a particular anime, in case everything vanished before I was done watching it all 🧨
+Relying on these kind of websites is **absolutly not safe**. They can disapear at any time without any warning. So what I end up doing is downloading all the videos available when I found intersest in a particular anime, in case everything vanished before I was done watching it all 👀
 
 This is when things get interesting.
 
-These websites develop very interesting and creative ways to counter people like me so we have to keep using their **ad bloated** website.
+The owners of these websites develop very interesting and creative ways to counter people like me so we have to keep using their **ad bloated** website.
 
 But you know me, I like challenges 😜
 
@@ -29,7 +29,7 @@ In this serie, I will introduce you to the most interesting website that I have 
 
 Let's do a quick first overview first.
 
-It looks like a very basic **WordPress** website with its usual load of ad popup but without any aggressive anti-adblock detection what so ever. Great start.
+This one looks like a very basic **WordPress** website with its usual load of ad popup, but without any aggressive anti-adblock detection what so ever. Great start.
 
 What really cought my eye on this one is the video player. Most of the time on this kind of website, they use custom players or embed iframe from other website. But here we have the very default **HTML5 video player** 😮
 
