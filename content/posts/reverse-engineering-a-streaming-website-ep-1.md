@@ -1,7 +1,7 @@
 ---
 slug: reverse-engineering-a-streaming-website-ep-1
 title: Reverse engineering a streaming website ~ Ep.1 
-description: In this serie I will introduce you to the most interesting websites that I have come across and how I managed to bypass their protection in order to download their precious videos.
+description: In this serie I will introduce you to the most interesting websites I came across and how I managed to bypass their protections to download their precious videos.
 cover_text: 🔧📺
 cover_color: purple
 date: 2021-04-27
@@ -116,7 +116,7 @@ Let's go back the video request URL shown earlier and focus on the request heade
 
 <markdown-image :src="slug + '/website-screenshot-11.jpg'" alt="website-screenshot-11"></markdown-image>
 
-Woaw ! Yes, I cancelled the request because it was taking to long. But this is a *VERY* good sign 🙌
+YaY ! Yes, I cancelled the request because it was taking to long. But this is a *VERY* good sign 🙌
 
 See the `151,1 MB` in the top right corner ? This indicates the size of the server response. What's why the request was taking so long. Because it was loading the whole video!
 
@@ -176,4 +176,4 @@ And that, is how you download a video from a streaming website despite its prote
 
 Thank you for reading, hope you like it 🙏
 
-Be sure that I will continue posting this kind of reverse engineer little stories. This was quite an easy one and only take about 30 to 45min to solve. Hope to find a more harder one in the futur 💪
+Be sure that I will continue posting this kind of reverse engineering little stories. This was quite an easy one and only take about 30 to 45min to solve. Hope to find a more harder one in the futur 💪
