@@ -1,12 +1,12 @@
 <template>
   <div class="layout__container">
     <NavBar />
-    <Nuxt />
+    <NuxtPage />
   </div>
 </template>
 
 <style lang="postcss">
-#__layout {
+.layout__container {
   @apply min-h-screen;
   max-width: 64rem;
   @apply mx-auto;

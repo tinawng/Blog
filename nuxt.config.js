@@ -1,90 +1,28 @@
-export default {
-  // Target (https://go.nuxtjs.dev/config-target)
-  target: 'static',
+export default defineNuxtConfig({
+  ssr: false,
 
-  // Global page headers (https://go.nuxtjs.dev/config-head)
-  head: {
-    title: 'Tina Blog',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Tina Blog' }
-    ],
-    htmlAttrs: {
-      lang: 'en'
+  nitro: { compressPublicAssets: true },
+
+  app: {
+    head: {
+      title: "Tina Blog",
+      meta: [
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { hid: "description", name: "description", content: "Tina Blog" },
+      ],
+      htmlAttrs: {
+        lang: "en",
+      },
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     },
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
   },
 
-  // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: [
-    "@/assets/css/base.postcss"
-  ],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
 
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [],
+  css: ["@/assets/css/base.postcss"],
 
-  // Auto import components (https://go.nuxtjs.dev/config-components)
-  components: true,
-
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-    // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
-    // https://github.com/juliomrqz/nuxt-optimized-images
-    '@aceforth/nuxt-optimized-images',
-  ],
-
-  optimizedImages: {
-    optimizeImages: true,
-    optimizeImagesInDev: true,
-    mozjpeg: { quality: 90 }
-    // webp: { method: 6, quality: 95 },
+  content: {
+    experimental: { sqliteConnector: "native" },
   },
-
-  // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: ['@nuxt/content'],
-
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {
-    html: {
-      minify: {
-        collapseBooleanAttributes: true,
-        decodeEntities: true,
-        minifyCSS: true,
-        minifyJS: true,
-        processConditionalComments: true,
-        removeEmptyAttributes: true,
-        removeRedundantAttributes: true,
-        trimCustomFragments: true,
-        useShortDoctype: true,
-        minifyURLs: true,
-        removeComments: true,
-        removeEmptyElements: true
-      }
-    },
-    postcss: {
-      preset: {
-        features: {
-          // Fixes: https://github.com/tailwindcss/tailwindcss/issues/1190#issuecomment-546621554
-          "focus-within-pseudo-class": false
-        }
-      }
-    },
-    // Fixes: https://github.com/nuxt/nuxt.js/issues/3877
-    splitChunks: {
-      layouts: true
-    }
-  },
-
-  render: {
-    bundleRenderer: {
-      shouldPreload: (file, type) => {
-        if (type === 'font') return /.woff2/.test(file)
-        return ['script', 'style'].includes(type)
-      }
-    }
-  }
-}
+})

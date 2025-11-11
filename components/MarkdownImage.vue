@@ -1,6 +1,6 @@
 <template>
   <div class="markdown_img__container" @click="is_enlarged = !is_enlarged">
-    <img class="markdown_img__image" :class="{'markdown_img_enlarged__image': is_enlarged}" :src="imgSrc()" :alt="alt" />
+    <img class="markdown_img__image" :class="{'markdown_img_enlarged__image': is_enlarged}" :src="`/img/posts/${src}`" :alt="alt" />
     <p class="markdown_img__desc">{{ description }}</p>
   </div>
 </template>

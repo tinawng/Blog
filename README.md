@@ -25,7 +25,6 @@ Good Reading 💖
 # Live
 
 ### 🔗 ***[blog.tina.cafe](http://blog.tina.cafe/)***
-Served using *[Yeetify 💨](https://github.com/tinawng/yeetify)*
 
 # Stack
 
@@ -48,11 +47,11 @@ Served using *[Yeetify 💨](https://github.com/tinawng/yeetify)*
 
 ```bash
 # install dependencies
-$ yarn install
+$ bun install
 
 # dev server with hot reload
-$ yarn run dev
+$ bun dev
 
 # build for production
-$ yarn run generate
+$ bun run generate
 ```

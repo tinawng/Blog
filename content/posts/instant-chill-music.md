@@ -28,25 +28,27 @@ Let just put on paper some of the main features I planned for this projet:
 - 🚫 No audio file hosting
 - 💿 Hand picked album playlist
 
-As I'm still in the *all static website* trend, this project will be generate with **[Nuxt.js](https://nuxtjs.org/)** static mode and served using my trusty **[Yeetify](https://github.com/tinawng/yeetify)** static server 💨.
+As I'm still in the _all static website_ trend, this project will be generate with **[Nuxt.js](https://nuxtjs.org/)** static mode and served using my trusty **[Yeetify](https://github.com/tinawng/yeetify)** static server 💨.
 
 # Puzzle solving 🧩
 
-I like breaking down big problems into smaller one but it's important to keep all the pieces in mind. Solving one part of a problem *smartly* can snowball *in a good way* for others parts of others problem.
+I like breaking down big problems into smaller one but it's important to keep all the pieces in mind. Solving one part of a problem _smartly_ can snowball _in a good way_ for others parts of others problem.
 
-With that in mind, let's start *bottom-up* with the data.
+With that in mind, let's start _bottom-up_ with the data.
 
 ## Album datas
 
 ### Tracks list
-An important aspect is to not host any file *directly*. Instead we're gonna stream all the albums from youtube using an hidden iframe 🚀
 
-One cool aspect of this approach is that I can use the Youtube API to get the video description. In lot of cases it contains the album track list with their time stamps! We *just* need to parse the description and build the tracklist.
+An important aspect is to not host any file _directly_. Instead we're gonna stream all the albums from youtube using an hidden iframe 🚀
+
+One cool aspect of this approach is that I can use the Youtube API to get the video description. In lot of cases it contains the album track list with their time stamps! We _just_ need to parse the description and build the tracklist.
 
 Writing the parser was a long and tedious task 😓 but I managed to have an algorithm that work in most cases. You can check it out on the [Github repo](https://github.com/tinawng/chill/blob/main/plugins/albums-parser.js).
 
 ### Album set
-In order to have my precious *✨hand picked✨* albums selection, I just added a JSON file with all the albums' Youtube links like following:
+
+In order to have my precious _✨hand picked✨_ albums selection, I just added a JSON file with all the albums' Youtube links like following:
 
 ```js[album.json]
 [
@@ -62,7 +64,7 @@ In order to have my precious *✨hand picked✨* albums selection, I just added 
 
 ### Script pre-running
 
-As you can imagine, running the *album parser* script for every registered albums take some time, not a lot, but still. That's why I'm using Nuxt's `asyncData` function 💖.
+As you can imagine, running the _album parser_ script for every registered albums take some time, not a lot, but still. That's why I'm using Nuxt's `asyncData` function 💖.
 
 ```js[index.vue]
 async asyncData({ $albums }) {
@@ -100,9 +102,10 @@ I reduce assets hosting to bare minimum using external hosts and JSONify albums 
 ## UI / UX
 
 ### Desktop
+
 UI was grealty and generously inspired by **Window Groove Music App** clean and minimalist design.
 
-<markdown-image :src="slug + '/windows-groove.jpg'" alt="windows groove" description="Windows Groove ~ very nice UI isn't it ? 💄"></markdown-image>
+<markdown-image src="instant-chill-music/windows-groove.jpg" alt="windows groove" description="Windows Groove ~ very nice UI isn't it ? 💄"></markdown-image>
 
 I made some tweaks here and there to better suit my taste and use case but keeping the essence of it, like the blurry album cover and text aligned to the right.
 
@@ -110,12 +113,11 @@ On the other hand, the album selection menu was a total improvisation which turn
 
 > Don't forget you can try it by yourself live [right here 🔗](https://chill.tina.cafe/)
 
-
 ### Mobile
 
 Since I've seen this design, I was waiting for a good oppurtunity to use it. A huge shoutout to [Ekko Design 🎉](https://www.ekkodesign.no/work/chillhop-music-app-ui-concept) for this amazing mobile app concept !
 
-<markdown-image :src="slug + '/ekko-design.jpg'" alt="ekko-design"></markdown-image>
+<markdown-image src="instant-chill-music/ekko-design.jpg" alt="ekko-design"></markdown-image>
 
 Again, a few small adjustments later and I have a mobile UI ✨.
 
@@ -123,7 +125,7 @@ Again, a few small adjustments later and I have a mobile UI ✨.
 
 ## Progress Bar
 
-In more *'normal'* usage you are not hiding the youtube video iframe. What's why, *I think*, both youtube embed player iframe and the *youtube-player* module I used don't have any event to listen to for time tracking.
+In more _'normal'_ usage you are not hiding the youtube video iframe. What's why, _I think_, both youtube embed player iframe and the _youtube-player_ module I used don't have any event to listen to for time tracking.
 
 That's a bummer 😒
 
@@ -135,7 +137,7 @@ setInterval(async () => {
 }, 3000);
 ```
 
-`player_current_time`  is then `watched` for updating the `current_track` accordingly to the album's track list and time stamps.
+`player_current_time` is then `watched` for updating the `current_track` accordingly to the album's track list and time stamps.
 
 ```js[index.vue ~ script]
 watch: {
@@ -154,9 +156,9 @@ I mean, you're not seeking through the track very often and you still can't do i
 
 I discover that finding if client is using mobile or desktop using javascript is actually stricky. There is some Nuxt module that give you this information based on `user-agent` request header. Unfornunately, as I'm running a static website, none of this module can work.
 
-On top of that, I'm to a big fan of using the *user-agent*. I don't know if it is 100% reliable and I want user to have to mobile UI on desktop if the browser is resized small enough.
+On top of that, I'm to a big fan of using the _user-agent_. I don't know if it is 100% reliable and I want user to have to mobile UI on desktop if the browser is resized small enough.
 
-For CSS, I can use `media queries` but for JS I need to be smarter. What I endup using is the same trick I used for my *Responsive Image Loader*
+For CSS, I can use `media queries` but for JS I need to be smarter. What I endup using is the same trick I used for my _Responsive Image Loader_
 
 ```js[index.vue ~ script]
 isMobile() {
@@ -166,7 +168,7 @@ isMobile() {
 
 ## Prevent mobile sleep
 
-Rembember when I said everything is streamed from Youtube ? Well, that means that, unlike a *'real'* music player app, this cannot play music if your mobile screen is locked. There is no workaround for this unless you are using a specific browser or a dedicated app. 😢
+Rembember when I said everything is streamed from Youtube ? Well, that means that, unlike a _'real'_ music player app, this cannot play music if your mobile screen is locked. There is no workaround for this unless you are using a specific browser or a dedicated app. 😢
 
 However, what I can do is prevent the screen from turning off 💡
 
@@ -178,6 +180,7 @@ this.player = YouTubePlayer("player", {
 	width: "1"
 });
 ```
+
 ```css[index.vue ~ style]
 iframe {
 	@apply absolute bottom-0 right-0 md:hidden;
@@ -186,7 +189,7 @@ iframe {
 
 ## Autoplay
 
-This one fall into the *strange behavior 👽* category. By that I mean sometimes it works and sometimes not.
+This one fall into the _strange behavior 👽_ category. By that I mean sometimes it works and sometimes not.
 
 On paper, autoplay is strongly discouraged from any video or audio source. You can take as an example the Web Audio API which will not play any sound without user intervention in the first place.
 

@@ -1,6 +1,6 @@
 ---
 slug: reverse-engineering-a-streaming-website-ep-1
-title: Reverse engineering a streaming website ~ Ep.1 
+title: Reverse engineering a streaming website ~ Ep.1
 description: In this serie I will introduce you to the most interesting websites I came across and how I managed to bypass their protections to download their precious videos.
 cover_text: 🔧📺
 cover_color: purple
@@ -9,7 +9,7 @@ author: Tina Wang
 tags: [Reverse Engineer, Front End]
 ---
 
-What I like to do during my long sleepness night, is randomly seek across *'disreputable'* streaming website, trying to find new animes or series to watch.
+What I like to do during my long sleepness night, is randomly seek across _'disreputable'_ streaming website, trying to find new animes or series to watch.
 
 Relying on these kind of websites is **absolutly not safe**. They can disapear at any time without any warning. So what I end up doing is downloading all the videos available when I found intersest in a particular anime, in case everything vanished before I was done watching it all 👀
 
@@ -25,7 +25,7 @@ In this serie, I will introduce you to the most interesting website that I have 
 
 # The target 🎯
 
-<markdown-image :src="slug + '/website-screenshot-1.jpg'" alt="website-screenshot-1"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-1.jpg" alt="website-screenshot-1"></markdown-image>
 
 Let's do a quick first overview first.
 
@@ -33,7 +33,7 @@ This one looks like a very basic **WordPress** website with its usual load of ad
 
 What really cought my eye on this one is the video player. Most of the time on this kind of website, they use custom players or embed iframe from other website. But here we have the very default **HTML5 video player** 😮
 
-<markdown-image :src="slug + '/website-screenshot-2.jpg'" alt="website-screenshot-2"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-2.jpg" alt="website-screenshot-2"></markdown-image>
 
 # First attack ⚔️
 
@@ -43,21 +43,21 @@ First thing to notice is that there isn't any dark pattern involved to block the
 
 Let's dive into the page html code 🤿
 
-<markdown-image :src="slug + '/website-screenshot-3.jpg'" alt="website-screenshot-3"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-3.jpg" alt="website-screenshot-3"></markdown-image>
 
 See that `controlslist` attribut on the `<video>` tag ? Let's see what happens if I remove the `nodownload` value
 
-<markdown-image :src="slug + '/website-screenshot-4.jpg'" alt="website-screenshot-4"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-4.jpg" alt="website-screenshot-4"></markdown-image>
 
 Ladies and gents, we have the download button back 🤘 Just need to click on it and... You really think it's gonna be that easy ? This is what happen when I try downloading the video.
 
-<markdown-image :src="slug + '/website-screenshot-5.jpg'" alt="website-screenshot-5"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-5.jpg" alt="website-screenshot-5"></markdown-image>
 
 Mmmmmh 🤔 You know what, let's just use the video source link set in the `src` attribut of the `<player>`. Let's do it raw by just copying and pasting it in the browser navigation bar. This should open a page with nothing but the video on it.
 
-<markdown-image :src="slug + '/website-screenshot-6.jpg'" alt="website-screenshot-6"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-6.jpg" alt="website-screenshot-6"></markdown-image>
 
-Well, I'm not that surprised but still... and yes the player is *still working* fine.
+Well, I'm not that surprised but still... and yes the player is _still working_ fine.
 
 Let the real game begin 😈
 
@@ -65,17 +65,17 @@ Let the real game begin 😈
 
 Let's reload the page and see what is comming in. Hopefully we'll se the video stream passing by.
 
-<markdown-image :src="slug + '/website-screenshot-7.jpg'" alt="website-screenshot-7" description="Click to enlarge 🔍"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-7.jpg" alt="website-screenshot-7"></markdown-image>
 
 Let's focus on the last two queries as they relate to the video.
 
-<markdown-image :src="slug + '/website-screenshot-8.jpg'" alt="website-screenshot-8" description="Click to enlarge 🔍"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-8.jpg" alt="website-screenshot-8" description="Click to enlarge 🔍"></markdown-image>
 
 `Request URL` can't lie (at least not to my knowledge). Video's url in the request is the very same as in the `<video>` tag and it still manages to get the video without troubles.
 
 Response Headers looks fine. `206 Partial Content` is nothing surprising for video content, `Content-Type` is `video/mp4` and `Content-Length` value is not 0.
 
- From here I will make two hypotheses. First one is that they managed to change the shown URL at the very last moment, fooling the DevTool on what the requested URL really is. Second one is that they are relying on some data somewhere, like a cookie for example, to identify from where the request is emited.
+From here I will make two hypotheses. First one is that they managed to change the shown URL at the very last moment, fooling the DevTool on what the requested URL really is. Second one is that they are relying on some data somewhere, like a cookie for example, to identify from where the request is emited.
 
 ## The _'hidding trick'_ hypotese 🧐
 
@@ -83,9 +83,9 @@ Because a trick of this kind is necessarily performed in JS, I'm going to spy ar
 
 So let's explore website sources, hoping to find something interesting.
 
-<markdown-image :src="slug + '/website-screenshot-9.jpg'" alt="website-screenshot-9" description="This view is from the 'Sources' devtools tab"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-9.jpg" alt="website-screenshot-9" description="This view is from the 'Sources' devtools tab"></markdown-image>
 
-Erff.. Not a lot to play with. In fact, based on their names, not a single JS file looks promising. As they only contain so little code I'll inspect them all. 
+Erff.. Not a lot to play with. In fact, based on their names, not a single JS file looks promising. As they only contain so little code I'll inspect them all.
 
 As html file can contains chunks of JS code, I'm going to take a look at `index.html` as well. It's the very first loaded file when visiting a website so it's a great place to hide some sneaky code 👻
 
@@ -110,13 +110,13 @@ So perhaps cookies are not the medium used to identity the source of the video r
 
 I'm going to pull out my favorite REST client [**Insomnia**](https://insomnia.rest/) and try making a simple `GET` request on the video URL.
 
-<markdown-image :src="slug + '/website-screenshot-10.jpg'" alt="website-screenshot-10" description="'works' as intended"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-10.jpg" alt="website-screenshot-10" description="'works' as intended"></markdown-image>
 
 Let's go back the video request URL shown earlier and focus on the request headers. I going brain-less here by copy and paste all the headers of the original request into my Insomia request.
 
-<markdown-image :src="slug + '/website-screenshot-11.jpg'" alt="website-screenshot-11"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-11.jpg" alt="website-screenshot-11"></markdown-image>
 
-YaY ! Yes, I cancelled the request because it was taking to long. But this is a *VERY* good sign 🙌
+YaY ! Yes, I cancelled the request because it was taking to long. But this is a _VERY_ good sign 🙌
 
 See the `151,1 MB` in the top right corner ? This indicates the size of the server response. What's why the request was taking so long. Because it was loading the whole video!
 
@@ -126,7 +126,7 @@ Let's find out what header is responsible for all of this. And I think a already
 
 For good measure, I'm going to try with this header only
 
-<markdown-image :src="slug + '/website-screenshot-12.jpg'" alt="website-screenshot-12"></markdown-image>
+<markdown-image src="reverse-engineering-a-streaming-website-ep-1/website-screenshot-12.jpg" alt="website-screenshot-12"></markdown-image>
 
 And it works 🎉🎊
 
