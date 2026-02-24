@@ -1,18 +1,17 @@
 <script setup>
-  definePageMeta({
-    layout: "post",
-  })
+  definePageMeta({ layout: "post" })
 
   const route = useRoute()
+  /** 🐛 Trailing slash, depsite beeing the same page, won't match document "path" so we have to remove it */
+  const path = route.path.endsWith("/") ? route.path.slice(0, -1) : route.path
 
-  const { data: post } = await useAsyncData(`${route.path}-posts`, () => queryCollection("posts").path(route.path).first())
-  const { data: surrounding_posts } = await useAsyncData(`${route.path}-related-posts`, async () => {
-    const posts = await queryCollectionItemSurroundings("posts", route.path, { fields: ["description", "cover_text", "cover_color", "tags"] })
+  const { data: post } = await useAsyncData(`${path}-posts`, () => queryCollection("posts").path(path).first())
+  const { data: surrounding_posts } = await useAsyncData(`${path}-related-posts`, async () => {
+    const posts = await queryCollectionItemSurroundings("posts", path, {
+      fields: ["description", "cover_text", "cover_color", "tags"],
+    })
     return posts.filter(Boolean)
   })
-
-  const author_pp_path = "profile-pictures/" + post.value.author.toLowerCase().replace(" ", "-") + ".jpg"
-  const post_cover_image = `/img/posts/${post.value.slug}/cover.png`
 
   function dateFormat(date) {
     const d = new Date(date).toDateString()
@@ -32,7 +31,7 @@
     <h1 class="mb-8 post__title">{{ post.title }}</h1>
     <div v-if="post.author" class="post__author">
       <div class="flex items-center">
-        <img class="post__author__profile_pic" :src="`/img/${author_pp_path}`" />
+        <img class="post__author__profile_pic" :src="`/img/profile-pictures/${post.author.toLowerCase().replace(' ', '-')}.jpg`" />
         <span class="post__author__name">{{ post.author }}</span>
       </div>
       <div class="post__author__socials">
@@ -48,7 +47,7 @@
       <div v-if="post.cover_text">
         {{ post.cover_text }}
       </div>
-      <img v-else :src="post_cover_image" :alt="post.slug" />
+      <img v-else :src="`/img/posts/${post.slug}/cover.png`" :alt="post.slug" />
     </div>
 
     <div v-if="post.live || post.repo" class="post__ext_links">
