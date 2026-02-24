@@ -5,11 +5,10 @@
 
   const route = useRoute()
 
-  const { data: post } = await useAsyncData(route.path, () => {
-    return queryCollection("posts").path(route.path).first()
-  })
-  const { data: surrounding_posts } = await useAsyncData(() => {
-    return queryCollectionItemSurroundings("posts", route.path, { fields: ["description", "cover_text", "cover_color", "tags"] })
+  const { data: post } = await useAsyncData(`${route.path}-posts`, () => queryCollection("posts").path(route.path).first())
+  const { data: surrounding_posts } = await useAsyncData(`${route.path}-related-posts`, async () => {
+    const posts = await queryCollectionItemSurroundings("posts", route.path, { fields: ["description", "cover_text", "cover_color", "tags"] })
+    return posts.filter(Boolean)
   })
 
   const author_pp_path = "profile-pictures/" + post.value.author.toLowerCase().replace(" ", "-") + ".jpg"
@@ -82,7 +81,7 @@
           <span v-for="tag in surrounding_posts[0].tags" :key="tag">{{ tag }}</span>
         </div>
       </div>
-      <div >
+      <div>
         <div class="next_post__cover" :class="`bg-${surrounding_posts[0].cover_color}-100`">
           <div v-if="surrounding_posts[0].cover_text">
             {{ surrounding_posts[0].cover_text }}
