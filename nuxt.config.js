@@ -1,7 +1,17 @@
 export default defineNuxtConfig({
   ssr: true,
 
-  nitro: { compressPublicAssets: true },
+  nitro: {
+    compressPublicAssets: true,
+    prerender: { ignore: ["/200.html"] },
+  },
+
+  vite: {
+    build: {
+      cssCodeSplit: false,
+      rollupOptions: { output: { inlineDynamicImports: true } },
+    },
+  },
 
   app: {
     head: {
